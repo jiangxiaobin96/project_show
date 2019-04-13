@@ -1,0 +1,4 @@
+project type需要转化 typeName->typeId
+project studentName 需要根据“，”号 split
+project teacherId 需要转换 teacherName->teacherId
+项目rating++

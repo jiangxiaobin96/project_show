@@ -25,4 +25,9 @@ public class LoginController {
             return "fail";
         }
     }
+
+    @RequestMapping("/layout")
+    public String layout(){
+        return "/";
+    }
 }
