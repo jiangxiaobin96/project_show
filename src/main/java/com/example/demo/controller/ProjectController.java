@@ -58,107 +58,89 @@ public class ProjectController {
         return projectList;
     }
 
-    @RequestMapping(value = "/uploadProject", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadProject(Project project){   //老师project内容上传至数据库
-        List<File> files = project.getFileList();
-        List<Picture> pictures = project.getPictureList();
-        List<Video> videos = project.getVideoList();
-        for(File file : files){
-            fileService.FileAdd(file,project.getProjectName());
-        }
-        for(Picture picture : pictures){
-            pictureService.PictureAdd(picture,project.getProjectName());
-        }
-        for(Video video : videos){
-            videoService.VideoAdd(video,project.getProjectName());
-        }
-//        String projectName = project.getProjectName();
-//        int typeId = project.getTypeId();
-//        String finishDate = project.getFinishDate();
-//        String studentName = project.getStudentName();
-//        int teacherId = project.getTeacherId();
-//        String projectDetail = project.getProjectDetail();
-//        String teamDetail = project.getTeamDetail();
-        projectDao.add(project);
-        return "上传成功";
-    }
+//    @RequestMapping(value = "/uploadProject", method = RequestMethod.POST)
+//    @ResponseBody
+//    public String uploadProject(Project project){   //老师project内容上传至数据库
+//        List<File> files = project.getFileList();
+//        List<Picture> pictures = project.getPictureList();
+//        List<Video> videos = project.getVideoList();
+//        for(File file : files){
+//            fileService.FileAdd(file,project.getProjectName());
+//        }
+//        for(Picture picture : pictures){
+//            pictureService.PictureAdd(picture,project.getProjectName());
+//        }
+//        for(Video video : videos){
+//            videoService.VideoAdd(video,project.getProjectName());
+//        }
+////        String projectName = project.getProjectName();
+////        int typeId = project.getTypeId();
+////        String finishDate = project.getFinishDate();
+////        String studentName = project.getStudentName();
+////        int teacherId = project.getTeacherId();
+////        String projectDetail = project.getProjectDetail();
+////        String teamDetail = project.getTeamDetail();
+//        projectDao.add(project);
+//        return "上传成功";
+//    }
 
     @RequestMapping(value = "/projectShow")
     @ResponseBody
     public Project ProjectShow(String pName){   //    项目展示，将project的数据传到前端
         Project project = projectDao.queryProjectResourceByName(pName);
-//        String projectName = projectDao.queryProjectResourceByName(pName).getProjectName();
-//        int projectType = projectDao.queryProjectResourceByName(pName).getTypeId();
-//        String finishDate = projectDao.queryProjectResourceByName(pName).getFinishDate();
-//        String studentName = projectDao.queryProjectResourceByName(pName).getStudentName();
-//        int teacherId = projectDao.queryProjectResourceByName(pName).getTeacherId();
-//        String projectDetail = projectDao.queryProjectResourceByName(pName).getProjectDetail();
-//        String teamDetail = projectDao.queryProjectResourceByName(pName).getTeamDetail();
-//        //int projectId = projectDao.queryProjectIdByName(pName);
-//        List<File> fileList = fileDao.queryFileByProjectName(pName);
-//        Project project = new Project();
-//        project.setProjectName(projectName);
-//        project.setTypeId(projectType);
-//        project.setFinishDate(finishDate);
-//        project.setStudentName(studentName);
-//        project.setTypeId(teacherId);
-//        project.setProjectDetail(projectDetail);
-//        project.setTeamDetail(teamDetail);
-//        project.setFileList(fileList);
         return project;
     }
 
-    @RequestMapping("/projectEdit")
-    @ResponseBody
-    public String projectEdit(Project project){     //管理员修改项目内容
-        projectDao.update(project);
-        return "编辑成功";
-    }
-
-    public String projectDel(String projectName){       //管理员删除项目
-        projectDao.deleteByProjectName(projectName);
-        return "删除成功";
-    }
-
-    public String projectFileAdd(Project project){      //管理员修改文件（上传）
-        List<File> fileList = project.getFileList();
-        for(File file : fileList){
-            fileService.FileAdd(file,project.getProjectName());
-        }
-        return "文件上传成功";
-    }
-
-    public String projectFileDel(String fileName){      //管理员修改文件（删除）
-        fileDao.deleteFileByName(fileName);
-        return "文件删除成功";
-    }
-
-    public String projectPictureAdd(Project project){      //管理员修改图片（上传）
-        List<Picture> pictureList = project.getPictureList();
-        for(Picture picture : pictureList){
-            pictureService.PictureAdd(picture,project.getProjectName());
-        }
-        return "文件上传成功";
-    }
-
-    public String projectPictureDel(String pictureName){      //管理员修改图片（删除）
-        pictureDao.deletePictureByName(pictureName);
-        return "文件删除成功";
-    }
-
-    public String projectVideoAdd(Project project){      //管理员修改视频（上传）
-        List<Video> videoList = project.getVideoList();
-        for(Video video : videoList){
-            videoService.VideoAdd(video,project.getProjectName());
-        }
-        return "文件上传成功";
-    }
-
-    public String projectVideoDel(String videoName){      //管理员修改视频（删除）
-        videoDao.deleteVideoByName(videoName);
-        return "文件删除成功";
-    }
+//    @RequestMapping("/projectEdit")
+//    @ResponseBody
+//    public String projectEdit(Project project){     //管理员修改项目内容
+//        projectDao.update(project);
+//        return "编辑成功";
+//    }
+//
+//    public String projectDel(String projectName){       //管理员删除项目
+//        projectDao.deleteByProjectName(projectName);
+//        return "删除成功";
+//    }
+//
+//    public String projectFileAdd(Project project){      //管理员修改文件（上传）
+//        List<File> fileList = project.getFileList();
+//        for(File file : fileList){
+//            fileService.FileAdd(file,project.getProjectName());
+//        }
+//        return "文件上传成功";
+//    }
+//
+//    public String projectFileDel(String fileName){      //管理员修改文件（删除）
+//        fileDao.deleteFileByName(fileName);
+//        return "文件删除成功";
+//    }
+//
+//    public String projectPictureAdd(Project project){      //管理员修改图片（上传）
+//        List<Picture> pictureList = project.getPictureList();
+//        for(Picture picture : pictureList){
+//            pictureService.PictureAdd(picture,project.getProjectName());
+//        }
+//        return "文件上传成功";
+//    }
+//
+//    public String projectPictureDel(String pictureName){      //管理员修改图片（删除）
+//        pictureDao.deletePictureByName(pictureName);
+//        return "文件删除成功";
+//    }
+//
+//    public String projectVideoAdd(Project project){      //管理员修改视频（上传）
+//        List<Video> videoList = project.getVideoList();
+//        for(Video video : videoList){
+//            videoService.VideoAdd(video,project.getProjectName());
+//        }
+//        return "文件上传成功";
+//    }
+//
+//    public String projectVideoDel(String videoName){      //管理员修改视频（删除）
+//        videoDao.deleteVideoByName(videoName);
+//        return "文件删除成功";
+//    }
 
     public void projectRatingAdd(String projectName){       //打分++
         projectDao.updateRating(projectName);
