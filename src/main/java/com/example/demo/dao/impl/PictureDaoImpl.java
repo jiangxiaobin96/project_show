@@ -6,20 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PictureDaoImpl implements PictureDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private ProjectDaoImpl projectDao;
+//    private ProjectDaoImpl projectDao;
 
     @Override
-    public int add(Picture picture, String projectName) {
-        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
-        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into picture(pictureName,pictureUrl,projectId) values(?,?,?)",picture.getPictureName(),picture.getPictureUrl(),projectId);
+    public int add(Picture picture) {
+//        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
+//        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
+        return jdbcTemplate.update("insert into picture(pictureName,pictureUrl,projectId) values(?,?,?)",picture.getPictureName(),picture.getPictureUrl(),picture.getProjectId());
     }
 
     @Override
@@ -28,8 +30,8 @@ public class PictureDaoImpl implements PictureDao {
     }
 
     @Override
-    public List<Picture> queryPictureByProjectName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public List<Picture> queryPictureByProjectId(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<Picture> rowMapper = new BeanPropertyRowMapper<>(Picture.class);
         String sql2 = "select * from video where projectId=" + projectId;
         List<Picture> pictureList = jdbcTemplate.query(sql2,rowMapper);

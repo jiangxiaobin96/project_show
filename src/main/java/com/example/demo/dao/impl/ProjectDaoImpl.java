@@ -2,7 +2,6 @@ package com.example.demo.dao.impl;
 
 import com.example.demo.dao.ProjectDao;
 import com.example.demo.entity.Project;
-import com.sun.rowset.internal.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

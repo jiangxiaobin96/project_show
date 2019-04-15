@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.util.List;
 
 public class Project {
+    private int projectId;
     private String projectName;
     private int typeId;
     private String studentName;
@@ -102,5 +103,13 @@ public class Project {
 
     public void setVideoList(List<Video> videoList) {
         this.videoList = videoList;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }

@@ -5,7 +5,7 @@ import com.example.demo.entity.File;
 import java.util.List;
 
 public interface FileDao {
-    int add(File file,String projectName);
+    int add(File file);
     int deleteFileByName(String fileName);
-    List<File> queryFileByProjectName(String projectName);
+    List<File> queryFileByProjectId(int projectId);
 }

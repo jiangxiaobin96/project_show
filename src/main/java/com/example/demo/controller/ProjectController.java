@@ -8,6 +8,10 @@ import com.example.demo.entity.File;
 import com.example.demo.entity.Picture;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Video;
+import com.example.demo.service.PictureService;
+import com.example.demo.service.impl.FileServiceImpl;
+import com.example.demo.service.impl.PictureServiceImpl;
+import com.example.demo.service.impl.VideoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,8 +25,17 @@ public class ProjectController {
 
     @Autowired
     private ProjectDaoImpl projectDao;
+    @Autowired
     private FileDaoImpl fileDao;
+    @Autowired
+    private FileServiceImpl fileService;
+    @Autowired
+    private PictureServiceImpl pictureService;
+    @Autowired
+    private VideoServiceImpl videoService;
+    @Autowired
     private PictureDaoImpl pictureDao;
+    @Autowired
     private VideoDaoImpl videoDao;
 
     @RequestMapping("/projectList")
@@ -49,8 +62,16 @@ public class ProjectController {
     @ResponseBody
     public String uploadProject(Project project){   //老师project内容上传至数据库
         List<File> files = project.getFileList();
+        List<Picture> pictures = project.getPictureList();
+        List<Video> videos = project.getVideoList();
         for(File file : files){
-            fileDao.add(file,project.getProjectName());
+            fileService.FileAdd(file,project.getProjectName());
+        }
+        for(Picture picture : pictures){
+            pictureService.PictureAdd(picture,project.getProjectName());
+        }
+        for(Video video : videos){
+            videoService.VideoAdd(video,project.getProjectName());
         }
 //        String projectName = project.getProjectName();
 //        int typeId = project.getTypeId();
@@ -66,24 +87,25 @@ public class ProjectController {
     @RequestMapping(value = "/projectShow")
     @ResponseBody
     public Project ProjectShow(String pName){   //    项目展示，将project的数据传到前端
-        String projectName = projectDao.queryProjectResourceByName(pName).getProjectName();
-        int projectType = projectDao.queryProjectResourceByName(pName).getTypeId();
-        String finishDate = projectDao.queryProjectResourceByName(pName).getFinishDate();
-        String studentName = projectDao.queryProjectResourceByName(pName).getStudentName();
-        int teacherId = projectDao.queryProjectResourceByName(pName).getTeacherId();
-        String projectDetail = projectDao.queryProjectResourceByName(pName).getProjectDetail();
-        String teamDetail = projectDao.queryProjectResourceByName(pName).getTeamDetail();
-        //int projectId = projectDao.queryProjectIdByName(pName);
-        List<File> fileList = fileDao.queryFileByProjectName(pName);
-        Project project = new Project();
-        project.setProjectName(projectName);
-        project.setTypeId(projectType);
-        project.setFinishDate(finishDate);
-        project.setStudentName(studentName);
-        project.setTypeId(teacherId);
-        project.setProjectDetail(projectDetail);
-        project.setTeamDetail(teamDetail);
-        project.setFileList(fileList);
+        Project project = projectDao.queryProjectResourceByName(pName);
+//        String projectName = projectDao.queryProjectResourceByName(pName).getProjectName();
+//        int projectType = projectDao.queryProjectResourceByName(pName).getTypeId();
+//        String finishDate = projectDao.queryProjectResourceByName(pName).getFinishDate();
+//        String studentName = projectDao.queryProjectResourceByName(pName).getStudentName();
+//        int teacherId = projectDao.queryProjectResourceByName(pName).getTeacherId();
+//        String projectDetail = projectDao.queryProjectResourceByName(pName).getProjectDetail();
+//        String teamDetail = projectDao.queryProjectResourceByName(pName).getTeamDetail();
+//        //int projectId = projectDao.queryProjectIdByName(pName);
+//        List<File> fileList = fileDao.queryFileByProjectName(pName);
+//        Project project = new Project();
+//        project.setProjectName(projectName);
+//        project.setTypeId(projectType);
+//        project.setFinishDate(finishDate);
+//        project.setStudentName(studentName);
+//        project.setTypeId(teacherId);
+//        project.setProjectDetail(projectDetail);
+//        project.setTeamDetail(teamDetail);
+//        project.setFileList(fileList);
         return project;
     }
 
@@ -94,10 +116,15 @@ public class ProjectController {
         return "编辑成功";
     }
 
+    public String projectDel(String projectName){       //管理员删除项目
+        projectDao.deleteByProjectName(projectName);
+        return "删除成功";
+    }
+
     public String projectFileAdd(Project project){      //管理员修改文件（上传）
         List<File> fileList = project.getFileList();
         for(File file : fileList){
-            fileDao.add(file,project.getProjectName());
+            fileService.FileAdd(file,project.getProjectName());
         }
         return "文件上传成功";
     }
@@ -110,7 +137,7 @@ public class ProjectController {
     public String projectPictureAdd(Project project){      //管理员修改图片（上传）
         List<Picture> pictureList = project.getPictureList();
         for(Picture picture : pictureList){
-            pictureDao.add(picture,project.getProjectName());
+            pictureService.PictureAdd(picture,project.getProjectName());
         }
         return "文件上传成功";
     }
@@ -123,7 +150,7 @@ public class ProjectController {
     public String projectVideoAdd(Project project){      //管理员修改视频（上传）
         List<Video> videoList = project.getVideoList();
         for(Video video : videoList){
-            videoDao.add(video,project.getProjectName());
+            videoService.VideoAdd(video,project.getProjectName());
         }
         return "文件上传成功";
     }
@@ -132,4 +159,9 @@ public class ProjectController {
         videoDao.deleteVideoByName(videoName);
         return "文件删除成功";
     }
+
+    public void projectRatingAdd(String projectName){       //打分++
+        projectDao.updateRating(projectName);
+    }
+
 }

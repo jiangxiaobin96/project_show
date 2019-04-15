@@ -5,7 +5,7 @@ import com.example.demo.entity.Picture;
 import java.util.List;
 
 public interface PictureDao {
-    int add(Picture picture, String projectName);
+    int add(Picture picture);
     int deletePictureByName(String pictureName);
-    List<Picture> queryPictureByProjectName(String projectName);
+    List<Picture> queryPictureByProjectId(int projectId);
 }

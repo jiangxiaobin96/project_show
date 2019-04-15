@@ -7,20 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class VideoDaoImpl implements VideoDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private ProjectDaoImpl projectDao;
+//    private ProjectDaoImpl projectDao;
 
     @Override
-    public int add(Video video, String projectName) {
-        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
-        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into video(videoName,videoUrl,projectId) values(?,?,?)",video.getVideoName(),video.getVideoUrl(),projectId);
+    public int add(Video video) {
+//        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
+//        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
+        return jdbcTemplate.update("insert into video(videoName,videoUrl,projectId) values(?,?,?)",video.getVideoName(),video.getVideoUrl(),video.getProjectId());
     }
 
     @Override
@@ -29,8 +31,8 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     @Override
-    public List<Video> queryVideoByProjectName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public List<Video> queryVideoByProjectId(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<Video> rowMapper = new BeanPropertyRowMapper<>(Video.class);
         String sql2 = "select * from video where projectId=" + projectId;
         List<Video> videoList = jdbcTemplate.query(sql2,rowMapper);

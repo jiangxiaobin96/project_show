@@ -6,20 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class FileDaoImpl implements FileDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private ProjectDaoImpl projectDao;
+    //private ProjectDaoImpl projectDao;
 
     @Override
-    public int add(File file,String projectName) {
-        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
-        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into file(fileName,fileUrl,projectId) values(?,?,?)",file.getFileName(),file.getFileUrl(),projectId);
+    public int add(File file) {
+//        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
+//        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
+        return jdbcTemplate.update("insert into file(fileName,fileUrl,projectId) values(?,?,?)",file.getFileName(),file.getFileUrl(),file.getProjectId());
     }
 
     @Override
@@ -28,13 +30,13 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public List<File> queryFileByProjectName(String projectName) {
+    public List<File> queryFileByProjectId(int projectId) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        int projectId = projectDao.queryProjectIdByName(projectName);
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<File> rowMapper = new BeanPropertyRowMapper<>(File.class);
-        String sql2 = "select * from file where projectId=" + projectId;
-        List<File> fileList = jdbcTemplate.query(sql2,rowMapper);
+        String sql = "select * from file where projectId=" + projectId;
+        List<File> fileList = jdbcTemplate.query(sql,rowMapper);
         if(null != fileList && fileList.size() > 0){
             return fileList;
         }else{
