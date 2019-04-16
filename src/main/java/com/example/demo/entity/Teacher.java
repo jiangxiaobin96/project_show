@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.util.List;
+
 public class Teacher {
     private String teacherName;
     private String pictureUrl;
@@ -7,6 +9,7 @@ public class Teacher {
     private String address;
     private String introduction;
     private String workExperience;
+    private List<String> workList;  //BeanPropertyRowMapper映射可能会出问题
 
     public String getTeacherName() {
         return teacherName;
@@ -48,11 +51,20 @@ public class Teacher {
         this.introduction = introduction;
     }
 
+
     public String getWorkExperience() {
         return workExperience;
     }
 
     public void setWorkExperience(String workExperience) {
         this.workExperience = workExperience;
+    }
+
+    public List<String> getWorkList() {
+        return workList;
+    }
+
+    public void setWorkList(List<String> workList) {
+        this.workList = workList;
     }
 }

@@ -31,6 +31,11 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     @Override
+    public int deleteVideoByProjectId(int projectId) {
+        return jdbcTemplate.update("delete from video where projectId=?",projectId);
+    }
+
+    @Override
     public List<Video> queryVideoByProjectId(int projectId) {
 //        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<Video> rowMapper = new BeanPropertyRowMapper<>(Video.class);

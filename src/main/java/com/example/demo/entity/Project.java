@@ -1,19 +1,27 @@
 package com.example.demo.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-public class Project {
-    private int projectId;
+@Entity
+@Table(name = "project")
+public class Project implements Serializable {
+    @GeneratedValue
+//    private int projectId;
     private String projectName;
     private int typeId;
+    private String finishDate;
     private String studentName;
     private int teacherId;
     private String projectDetail;
     private String teamDetail;
-    private String finishDate;
     private int rating;
+    @Transient
     private List<File> fileList;
+    @Transient
     private List<Picture> pictureList;
+    @Transient
     private List<Video> videoList;
 
 
@@ -105,11 +113,11 @@ public class Project {
         this.videoList = videoList;
     }
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
+//    public int getProjectId() {
+//        return projectId;
+//    }
+//
+//    public void setProjectId(int projectId) {
+//        this.projectId = projectId;
+//    }
 }

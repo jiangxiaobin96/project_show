@@ -30,6 +30,11 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
+    public int deleteFileByProjectId(int projectId) {
+        return jdbcTemplate.update("delete from file where projectId=?",projectId);
+    }
+
+    @Override
     public List<File> queryFileByProjectId(int projectId) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);

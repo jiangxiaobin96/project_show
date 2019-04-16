@@ -4,11 +4,7 @@ import com.example.demo.dao.impl.FileDaoImpl;
 import com.example.demo.dao.impl.PictureDaoImpl;
 import com.example.demo.dao.impl.ProjectDaoImpl;
 import com.example.demo.dao.impl.VideoDaoImpl;
-import com.example.demo.entity.File;
-import com.example.demo.entity.Picture;
 import com.example.demo.entity.Project;
-import com.example.demo.entity.Video;
-import com.example.demo.service.PictureService;
 import com.example.demo.service.impl.FileServiceImpl;
 import com.example.demo.service.impl.PictureServiceImpl;
 import com.example.demo.service.impl.VideoServiceImpl;
@@ -44,15 +40,19 @@ public class ProjectController {
         return projectNameList;
     }
 
+    @RequestMapping(value = "/searchName", method = RequestMethod.POST)
     public Project getProjectByName(String projectName){         //根据项目名称搜索
+        System.out.println("projectName:"+projectName);
         return projectDao.queryProjectResourceByName(projectName);
     }
 
+    @RequestMapping(value = "/searchType", method = RequestMethod.POST)
     public List<Project> getProjectListByType(int typeId){      //根据项目类型搜索
         List<Project> projectList = projectDao.queryProjectListByType(typeId);
         return projectList;
     }
 
+    @RequestMapping(value = "/searchTime", method = RequestMethod.POST)
     public List<Project> getProjectListByTime(String finishDate){       //根据项目时间搜索
         List<Project> projectList = projectDao.queryProjectListByTime(finishDate);
         return projectList;
@@ -84,10 +84,11 @@ public class ProjectController {
 //        return "上传成功";
 //    }
 
-    @RequestMapping(value = "/projectShow")
+    @RequestMapping(value = "/projectShow", method = RequestMethod.POST)
     @ResponseBody
     public Project ProjectShow(String pName){   //    项目展示，将project的数据传到前端
         Project project = projectDao.queryProjectResourceByName(pName);
+//        System.out.println("projectName:"+project.getProjectName());
         return project;
     }
 
@@ -142,6 +143,18 @@ public class ProjectController {
 //        return "文件删除成功";
 //    }
 
+    public List<String> getHomePageList(){          //导航栏
+        List<String> list = projectDao.queryHomePageList();
+        return list;
+    }
+
+    @RequestMapping(value = "/getHomePage")
+    public List<Project> getHomePageProjectShow(){      //首页展示rating排名前三的项目
+        List<Project> list = projectDao.queryProjectListByRating();
+        return list;
+    }
+
+    @RequestMapping("/addRating")
     public void projectRatingAdd(String projectName){       //打分++
         projectDao.updateRating(projectName);
     }

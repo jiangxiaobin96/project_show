@@ -12,6 +12,8 @@ public interface ProjectDao {
     int queryProjectIdByName(String projectName);
     Project queryProjectResourceByName(String projectName);
     List<String> queryProjectList();
+    List<String> queryHomePageList();
     List<Project> queryProjectListByType(int type);
     List<Project> queryProjectListByTime(String finishDate);
+    List<Project> queryProjectListByRating();
 }

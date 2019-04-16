@@ -5,5 +5,6 @@ import com.example.demo.entity.Project;
 import java.util.List;
 
 public interface ProjectService {
-
+//    void uploadProject();
+    void delProjectByName(String projectName);
 }

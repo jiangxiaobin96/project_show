@@ -30,6 +30,11 @@ public class PictureDaoImpl implements PictureDao {
     }
 
     @Override
+    public int deletePictureByProjectId(int projectId) {
+        return jdbcTemplate.update("delete from picture where projectId=?",projectId);
+    }
+
+    @Override
     public List<Picture> queryPictureByProjectId(int projectId) {
 //        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<Picture> rowMapper = new BeanPropertyRowMapper<>(Picture.class);
