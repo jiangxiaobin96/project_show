@@ -7,6 +7,7 @@ import com.example.demo.service.FileService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -23,8 +24,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void queryFileByProjectName(String projectName) {
+    public List<File> queryFileByProjectName(String projectName) {
         int projectId = projectDao.queryProjectIdByName(projectName);
-        fileDao.queryFileByProjectId(projectId);
+        List<File> list = fileDao.queryFileByProjectId(projectId);
+        return list;
     }
 }

@@ -3,7 +3,9 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Picture;
 
+import java.util.List;
+
 public interface PictureService {
     void PictureAdd(Picture picture, String projectName);
-    void queryPictureByProjectName(String projectName);
+    List<Picture> queryPictureByProjectName(String projectName);
 }

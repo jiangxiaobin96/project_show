@@ -6,6 +6,7 @@ import com.example.demo.dao.impl.TeacherDaoImpl;
 import com.example.demo.entity.*;
 import com.example.demo.service.impl.FileServiceImpl;
 import com.example.demo.service.impl.PictureServiceImpl;
+import com.example.demo.service.impl.ProjectServiceImpl;
 import com.example.demo.service.impl.VideoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,18 @@ public class TeacherController {
     private PictureServiceImpl pictureService;
     @Autowired
     private VideoServiceImpl videoService;
+    @Autowired
+    private ProjectServiceImpl projectService;
+
+    @RequestMapping("/getTeacherNameList")
+    public List<String> getTeacherNameList(){       //向前端发送教师列表
+        List<String> list = teacherDao.queryTeacherNameList();
+        return list;
+    }
 
     @RequestMapping("/getTeacherList")
-    public List<String> getTeacherList(){       //向前端发送教师列表
-        List<String> list = teacherDao.queryTeacherList();
+    public List<Teacher> getTeacherList(){
+        List<Teacher> list = teacherDao.queryTeacherList();
         return list;
     }
 
@@ -63,6 +72,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/uploadProject", method = RequestMethod.POST)
     public String uploadProject(@RequestBody Project project){   //老师project内容上传至数据库
+        projectService.typeAndfinishDateAdd(project);
         projectDao.add(project);
         List<File> files = project.getFileList();
         List<Picture> pictures = project.getPictureList();

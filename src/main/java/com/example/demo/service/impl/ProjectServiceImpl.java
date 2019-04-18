@@ -32,4 +32,22 @@ public class ProjectServiceImpl implements ProjectService {
         videoDao.deleteVideoByProjectId(projectId);
         projectDao.deleteByProjectName(projectName);
     }
+
+    @Override
+    public void typeAndfinishDateAdd(Project project) {
+        String typeName = project.getType();
+        String finishDate = project.getFinishDate();
+        List<String> typeList = projectDao.queryTypeList();
+        List<String> finishList = projectDao.queryFinishDateList();
+        if(typeList.contains(typeName)){
+
+        }else{
+            projectDao.typeAdd(typeName);
+        }
+        if(finishList.contains(finishDate)){
+
+        }else{
+            projectDao.finishAdd(finishDate);
+        }
+    }
 }

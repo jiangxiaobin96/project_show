@@ -14,11 +14,11 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(User user){
+    public String login(@RequestBody User user){
         String userName = user.getUserName();
         String password = user.getPassword();
-        System.out.println(userName);
-        System.out.println(password);
+//        System.out.println("userName"+userName);
+//        System.out.println("password"+password);
         if(password.equals(userDao.queryUserResourceByName(userName).getPassword())){
             return "success";
         }else{

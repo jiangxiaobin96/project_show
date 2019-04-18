@@ -2,8 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.entity.File;
 
+import java.util.List;
+
 public interface FileService {
     void FileAdd(File file,String projectName);
-    void queryFileByProjectName(String projectName);
-    
+    List<File> queryFileByProjectName(String projectName);
 }

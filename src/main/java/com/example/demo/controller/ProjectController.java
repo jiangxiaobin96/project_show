@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.File;
+import com.example.demo.entity.Picture;
+import com.example.demo.entity.Video;
+import com.sun.org.apache.xerces.internal.xni.parser.XMLPullParserConfiguration;
+import org.json.JSONObject;
 import com.example.demo.dao.impl.FileDaoImpl;
 import com.example.demo.dao.impl.PictureDaoImpl;
 import com.example.demo.dao.impl.ProjectDaoImpl;
@@ -9,10 +14,7 @@ import com.example.demo.service.impl.FileServiceImpl;
 import com.example.demo.service.impl.PictureServiceImpl;
 import com.example.demo.service.impl.VideoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,10 +36,31 @@ public class ProjectController {
     @Autowired
     private VideoDaoImpl videoDao;
 
-    @RequestMapping("/projectList")
-    public List<String> getProjectList(){      //向前端传项目列表
-        List<String> projectNameList = projectDao.queryProjectList();
+    @RequestMapping("/projecNametList")
+    public List<String> getProjectNameList(){      //向前端传项目列表
+        List<String> projectNameList = projectDao.queryProjectNameList();
         return projectNameList;
+    }
+
+    @RequestMapping("/projectList")
+    public List<Project> getProjectList(){
+        System.out.println("projectList");
+        List<Project> projectList = projectDao.queryProjectList();
+        return projectList;
+    }
+
+    @RequestMapping("/typeList")
+    public List<String> getTypeList(){
+        System.out.println("typeList");
+        List<String> typeList = projectDao.queryTypeList();
+        return typeList;
+    }
+
+    @RequestMapping("/finishDateList")
+    public List<String> getfinishDateList(){
+        System.out.println("finishDateList");
+        List<String> finishDateList = projectDao.queryFinishDateList();
+        return finishDateList;
     }
 
     @RequestMapping(value = "/searchName", method = RequestMethod.POST)
@@ -55,6 +78,12 @@ public class ProjectController {
     @RequestMapping(value = "/searchTime", method = RequestMethod.POST)
     public List<Project> getProjectListByTime(String finishDate){       //根据项目时间搜索
         List<Project> projectList = projectDao.queryProjectListByTime(finishDate);
+        return projectList;
+    }
+
+    @RequestMapping(value = "/searchTeacherName", method = RequestMethod.POST)
+    public List<Project> getProjectListByTeacherName(String teacherName){
+        List<Project> projectList = projectDao.queryProjectByTeacherName(teacherName);
         return projectList;
     }
 
@@ -90,6 +119,24 @@ public class ProjectController {
         Project project = projectDao.queryProjectResourceByName(pName);
 //        System.out.println("projectName:"+project.getProjectName());
         return project;
+    }
+
+    @RequestMapping(value = "/projectFile", method = RequestMethod.POST)
+    public List<File> getFileListByName(String projectName){
+        List<File> list = fileService.queryFileByProjectName(projectName);
+        return list;
+    }
+
+    @RequestMapping(value = "/projecPicture", method = RequestMethod.POST)
+    public List<Picture> getPictureListByName(String projectName){
+        List<Picture> list = pictureService.queryPictureByProjectName(projectName);
+        return list;
+    }
+
+    @RequestMapping(value = "/projecVideo", method = RequestMethod.POST)
+    public List<Video> getVideoListByName(String projectName){
+        List<Video> list = videoService.queryVideoByProjectName(projectName);
+        return list;
     }
 
 //    @RequestMapping("/projectEdit")

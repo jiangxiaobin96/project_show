@@ -7,6 +7,7 @@ import com.example.demo.service.VideoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -24,8 +25,9 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void queryVideoByProjectName(String projectName) {
+    public List<Video> queryVideoByProjectName(String projectName) {
         int projectId = projectDao.queryProjectIdByName(projectName);
-        videoDao.queryVideoByProjectId(projectId);
+        List<Video> list = videoDao.queryVideoByProjectId(projectId);
+        return list;
     }
 }

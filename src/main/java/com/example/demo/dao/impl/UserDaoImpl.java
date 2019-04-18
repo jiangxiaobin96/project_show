@@ -33,12 +33,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User queryUserResourceByName(String userName) {
-        System.out.println("user:"+userName);
+//        System.out.println("user:"+userName);
 //        String sql = "select * from user where name=" + "'"+ userName + "'";
         String sql = "select * from user where name=?";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
         User user = jdbcTemplate.queryForObject(sql,rowMapper,userName);
-        System.out.println("database:"+user.getPassword());
+//        System.out.println("database:"+user.getPassword());
         if(null != user){
             return user;
         }else {

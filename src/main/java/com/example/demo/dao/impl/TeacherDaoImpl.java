@@ -54,7 +54,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public List<String> queryTeacherList() {
+    public List<String> queryTeacherNameList() {
         String sql = "select teacherName from teacher";
         System.out.println("sql:"+sql);
 //        RowMapper<String> rowMapper = new BeanPropertyRowMapper<>(String.class);
@@ -62,5 +62,17 @@ public class TeacherDaoImpl implements TeacherDao {
         List<String> list = jdbcTemplate.queryForList(sql,String.class);
         System.out.println(list);
         return list;
+    }
+
+    @Override
+    public List<Teacher> queryTeacherList() {
+        String sql = "select * from teacher";
+        RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
+        List<Teacher> teachers = jdbcTemplate.query(sql,rowMapper);
+        if(null != teachers && teachers.size() > 0){
+            return teachers;
+        }else{
+            return null;
+        }
     }
 }

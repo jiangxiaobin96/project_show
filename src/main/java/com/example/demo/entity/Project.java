@@ -10,13 +10,14 @@ public class Project implements Serializable {
     @GeneratedValue
 //    private int projectId;
     private String projectName;
-    private int typeId;
+    private String type;
     private String finishDate;
     private String studentName;
-    private int teacherId;
+    private String teacherName;
     private String projectDetail;
     private String teamDetail;
     private int rating;
+    private String firstPicture;
     @Transient
     private List<File> fileList;
     @Transient
@@ -33,13 +34,7 @@ public class Project implements Serializable {
         this.projectName = projectName;
     }
 
-    public int getTypeId() {
-        return typeId;
-    }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
 
     public String getStudentName() {
         return studentName;
@@ -49,13 +44,7 @@ public class Project implements Serializable {
         this.studentName = studentName;
     }
 
-    public int getTeacherId() {
-        return teacherId;
-    }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
 
     public String getProjectDetail() {
         return projectDetail;
@@ -111,6 +100,30 @@ public class Project implements Serializable {
 
     public void setVideoList(List<Video> videoList) {
         this.videoList = videoList;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getFirstPicture() {
+        return firstPicture;
+    }
+
+    public void setFirstPicture(String firstPicture) {
+        this.firstPicture = firstPicture;
     }
 
 //    public int getProjectId() {

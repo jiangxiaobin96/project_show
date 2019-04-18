@@ -7,6 +7,7 @@ import com.example.demo.service.PictureService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class PictureServiceImpl implements PictureService {
@@ -24,8 +25,9 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public void queryPictureByProjectName(String projectName) {
+    public List<Picture> queryPictureByProjectName(String projectName) {
         int projectId = projectDao.queryProjectIdByName(projectName);
-        pictureDao.queryPictureByProjectId(projectId);
+        List<Picture> list = pictureDao.queryPictureByProjectId(projectId);
+        return list;
     }
 }
