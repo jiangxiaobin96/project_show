@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 public class Teacher {
@@ -9,6 +10,7 @@ public class Teacher {
     private String address;
     private String introduction;
     private String workExperience;
+    @Transient
     private List<String> workList;  //BeanPropertyRowMapper映射可能会出问题
 
     public String getTeacherName() {

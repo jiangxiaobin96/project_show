@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.entity.File;
 import com.example.demo.entity.Picture;
 import com.example.demo.entity.Video;
-import com.sun.org.apache.xerces.internal.xni.parser.XMLPullParserConfiguration;
 import org.json.JSONObject;
 import com.example.demo.dao.impl.FileDaoImpl;
 import com.example.demo.dao.impl.PictureDaoImpl;
@@ -64,14 +63,18 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/searchName", method = RequestMethod.POST)
-    public Project getProjectByName(String projectName){         //根据项目名称搜索
+    public List<Project> getProjectByName(String projectName){         //根据项目名称搜索
         System.out.println("projectName:"+projectName);
         return projectDao.queryProjectResourceByName(projectName);
     }
 
     @RequestMapping(value = "/searchType", method = RequestMethod.POST)
-    public List<Project> getProjectListByType(int typeId){      //根据项目类型搜索
-        List<Project> projectList = projectDao.queryProjectListByType(typeId);
+    public List<Project> getProjectListByType(String typeName){      //根据项目类型搜索
+        System.out.println(typeName);
+        typeName = typeName.replace("<span>","");
+        typeName = typeName.replace("</span>","");
+        System.out.println(typeName);
+        List<Project> projectList = projectDao.queryProjectListByType(typeName);
         return projectList;
     }
 
@@ -81,7 +84,7 @@ public class ProjectController {
         return projectList;
     }
 
-    @RequestMapping(value = "/searchTeacherName", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchProjectByTeacherName", method = RequestMethod.POST)
     public List<Project> getProjectListByTeacherName(String teacherName){
         List<Project> projectList = projectDao.queryProjectByTeacherName(teacherName);
         return projectList;
@@ -116,7 +119,7 @@ public class ProjectController {
     @RequestMapping(value = "/projectShow", method = RequestMethod.POST)
     @ResponseBody
     public Project ProjectShow(String pName){   //    项目展示，将project的数据传到前端
-        Project project = projectDao.queryProjectResourceByName(pName);
+        Project project = projectDao.queryProjectByName(pName);
 //        System.out.println("projectName:"+project.getProjectName());
         return project;
     }

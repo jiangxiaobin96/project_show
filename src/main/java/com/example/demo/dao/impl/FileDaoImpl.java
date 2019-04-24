@@ -21,7 +21,7 @@ public class FileDaoImpl implements FileDao {
     public int add(File file) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into file(fileName,fileUrl,projectId) values(?,?,?)",file.getFileName(),file.getFileUrl(),file.getProjectId());
+        return jdbcTemplate.update("insert into file(fileName,projectId) values(?,?)",file.getName(),file.getProjectId());
     }
 
     @Override

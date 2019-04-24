@@ -10,6 +10,7 @@ import com.example.demo.service.impl.ProjectServiceImpl;
 import com.example.demo.service.impl.VideoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,13 +31,13 @@ public class TeacherController {
     @Autowired
     private ProjectServiceImpl projectService;
 
-    @RequestMapping("/getTeacherNameList")
+    @RequestMapping("/TeacherNameList")
     public List<String> getTeacherNameList(){       //向前端发送教师列表
         List<String> list = teacherDao.queryTeacherNameList();
         return list;
     }
 
-    @RequestMapping("/getTeacherList")
+    @RequestMapping("/TeacherList")
     public List<Teacher> getTeacherList(){
         List<Teacher> list = teacherDao.queryTeacherList();
         return list;
@@ -47,15 +48,22 @@ public class TeacherController {
         return teacherDao.queryTeacherByName(teacherName);
     }
 
+    @RequestMapping(value = "/searchTeacherByName",method = RequestMethod.POST)
+    public List<Teacher> getTeacherListByName(String teacherName){
+        return teacherDao.queryTeacherResourceByName(teacherName);
+    }
 //    public String uploadTeacher(Teacher teacher){       //上传老师信息到数据库
 //        teacherDao.add(teacher);
 //        return "上传成功";
 //    }
 
     @RequestMapping(value = "/teacherShow", method = RequestMethod.POST)
-    public Teacher teacherShow(String TName){       //将老师信息传给前端
-        Teacher teacher = teacherDao.queryTeacherByName(TName);
+    public Teacher getTeacher(String tName){       //将老师信息传给前端
+        System.out.println(tName);
+        Teacher teacher = teacherDao.queryTeacherByName(tName);
+        System.out.println(teacher.getWorkExperience());
         List<String> list = Arrays.asList(teacher.getWorkExperience().split(","));
+        System.out.println(list);
         teacher.setWorkList(list);
         return teacher;
     }
@@ -72,10 +80,14 @@ public class TeacherController {
 
     @RequestMapping(value = "/uploadProject", method = RequestMethod.POST)
     public String uploadProject(@RequestBody Project project){   //老师project内容上传至数据库
+        System.out.println("success");
         projectService.typeAndfinishDateAdd(project);
         projectDao.add(project);
+//        List<MultipartFile> fileList = project.getFileList();
+
         List<File> files = project.getFileList();
         List<Picture> pictures = project.getPictureList();
+        System.out.println(pictures.size());
         List<Video> videos = project.getVideoList();
         for(File file : files){
             fileService.FileAdd(file,project.getProjectName());

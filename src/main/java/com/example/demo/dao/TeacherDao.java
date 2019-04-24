@@ -10,6 +10,7 @@ public interface TeacherDao {
     int deleteByName(String teacherName);
     int update(Teacher teacher);
     int queryTeacherIdByName(String teacherName);
+    List<Teacher> queryTeacherResourceByName(String teacherName);
     Teacher queryTeacherByName(String teacherName);
     List<String> queryTeacherNameList();
     List<Teacher> queryTeacherList();

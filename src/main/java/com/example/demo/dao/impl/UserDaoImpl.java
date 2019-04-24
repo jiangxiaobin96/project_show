@@ -35,11 +35,13 @@ public class UserDaoImpl implements UserDao {
     public User queryUserResourceByName(String userName) {
 //        System.out.println("user:"+userName);
 //        String sql = "select * from user where name=" + "'"+ userName + "'";
-        String sql = "select * from user where name=?";
+        String sql = "select * from user where userName=?";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
         User user = jdbcTemplate.queryForObject(sql,rowMapper,userName);
 //        System.out.println("database:"+user.getPassword());
         if(null != user){
+            System.out.println(user.getUserName());
+            System.out.println(user.getPassword());
             return user;
         }else {
             return null;

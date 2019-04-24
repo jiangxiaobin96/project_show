@@ -42,14 +42,33 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Teacher queryTeacherByName(String teacherName) {
-        String sql = "select * from teacher where teacherName=?";
+    public List<Teacher> queryTeacherResourceByName(String teacherName) {
+        String sql = "select * from teacher where teacherName=" + "'" + teacherName + "'";
+//        System.out.println("sql:"+sql);
         RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
-        Teacher teacher = jdbcTemplate.queryForObject(sql,rowMapper,teacherName);
-        if(null != teacher){
+        List<Teacher> teacher = jdbcTemplate.query(sql,rowMapper);
+//        System.out.println(project);
+        if(null != teacher && teacher.size() > 0){
+            //System.out.println(project.get(0));
             return teacher;
         }else{
-            return  null;
+            return null;
+        }
+    }
+
+    @Override
+    public Teacher queryTeacherByName(String teacherName) {
+        String sql = "select * from teacher where teacherName=" + "'" + teacherName + "'";
+        System.out.println("sql:"+sql);
+        RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
+        List<Teacher> teachers = jdbcTemplate.query(sql,rowMapper);
+        System.out.println(teachers.size());
+//        System.out.println(project);
+        if(null != teachers && teachers.size() > 0){
+            //System.out.println(project.get(0));
+            return teachers.get(0);
+        }else{
+            return null;
         }
     }
 

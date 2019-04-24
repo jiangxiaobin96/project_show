@@ -13,16 +13,16 @@ public class LoginController {
     private UserDaoImpl userDao;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public String login(@RequestBody User user){
+    public User login(@RequestBody User user){
         String userName = user.getUserName();
         String password = user.getPassword();
-//        System.out.println("userName"+userName);
-//        System.out.println("password"+password);
-        if(password.equals(userDao.queryUserResourceByName(userName).getPassword())){
-            return "success";
+        System.out.println("userName"+userName);
+        System.out.println("password"+password);
+        User user1 = userDao.queryUserResourceByName(userName);
+        if(password.equals(user1.getPassword())){
+            return user1;
         }else{
-            return "fail";
+            return null;
         }
     }
 

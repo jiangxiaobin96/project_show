@@ -17,7 +17,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
     @Override
     public int add(Project project) {
-        String sql = "insert into project(projectName,typeId,finishDate,studentName,teacherId,projectDetail,teamDetail,firstPicture) values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into project(projectName,type,finishDate,studentName,teacherName,projectDetail,teamDetail,firstPicture) values(?,?,?,?,?,?,?,?)";
         System.out.println(project.getProjectName());
         System.out.println(project.getType());
         System.out.println(project.getFinishDate());
@@ -65,14 +65,29 @@ public class ProjectDaoImpl implements ProjectDao {
 
 
     @Override
-    public Project queryProjectResourceByName(String projectName) {
+    public List<Project> queryProjectResourceByName(String projectName) {
         String sql = "select * from project where projectName=" + "'" + projectName + "'";
 //        System.out.println("sql:"+sql);
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> project = jdbcTemplate.query(sql,rowMapper);
 //        System.out.println(project);
         if(null != project && project.size() > 0){
-            System.out.println(project.get(0));
+            //System.out.println(project.get(0));
+            return project;
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public Project queryProjectByName(String projectName) {
+        String sql = "select * from project where projectName=" + "'" + projectName + "'";
+//        System.out.println("sql:"+sql);
+        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
+        List<Project> project = jdbcTemplate.query(sql,rowMapper);
+//        System.out.println(project);
+        if(null != project && project.size() > 0){
+            //System.out.println(project.get(0));
             return project.get(0);
         }else{
             return null;
@@ -133,8 +148,8 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public List<Project> queryProjectListByType(int type) {
-        String sql = "select * from project where typeId=" + type;
+    public List<Project> queryProjectListByType(String typeName) {
+        String sql = "select * from project where type=" + "'" + typeName + "'";
         System.out.println(sql);
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> projects = jdbcTemplate.query(sql,rowMapper);

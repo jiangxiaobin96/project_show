@@ -21,7 +21,7 @@ public class PictureDaoImpl implements PictureDao {
     public int add(Picture picture) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into picture(pictureName,pictureUrl,projectId) values(?,?,?)",picture.getPictureName(),picture.getPictureUrl(),picture.getProjectId());
+        return jdbcTemplate.update("insert into picture(pictureName,projectId) values(?,?)",picture.getName(),picture.getProjectId());
     }
 
     @Override
