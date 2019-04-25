@@ -30,8 +30,8 @@ public class ProjectDaoImpl implements ProjectDao {
 
     @Override
     public int update(Project project) {
-        String sql = "update project set typeId=?,finishDate=?,studentName=?,teacherId=?,projectDetail=?,teamDetail=?,firstPicture=? where projectName=?";
-        return jdbcTemplate.update(sql,project.getType(),project.getFinishDate(),project.getStudentName(),project.getTeacherName(),project.getProjectDetail(),project.getTeamDetail(),project.getFirstPicture(),project.getProjectName());
+        String sql = "update project set type=?,finishDate=?,studentName=?,teacherName=?,projectDetail=?,teamDetail=? where projectName=?";
+        return jdbcTemplate.update(sql,project.getType(),project.getFinishDate(),project.getStudentName(),project.getTeacherName(),project.getProjectDetail(),project.getTeamDetail(),project.getProjectName());
     }
 
     @Override

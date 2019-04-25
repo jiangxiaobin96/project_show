@@ -70,6 +70,7 @@ public class AdminController {
         return "文件上传成功";
     }
 
+    @RequestMapping(value = "/delFile",method = RequestMethod.POST)
     public String projectFileDel(String fileName){      //管理员修改文件（删除）
         fileDao.deleteFileByName(fileName);
         return "文件删除成功";
@@ -82,7 +83,7 @@ public class AdminController {
         }
         return "文件上传成功";
     }
-
+    @RequestMapping(value = "/delPicture",method = RequestMethod.POST)
     public String projectPictureDel(String pictureName){      //管理员修改图片（删除）
         pictureDao.deletePictureByName(pictureName);
         return "文件删除成功";
@@ -96,6 +97,7 @@ public class AdminController {
         return "文件上传成功";
     }
 
+    @RequestMapping(value = "/delVideo",method = RequestMethod.POST)
     public String projectVideoDel(String videoName){      //管理员修改视频（删除）
         videoDao.deleteVideoByName(videoName);
         return "文件删除成功";
@@ -107,20 +109,23 @@ public class AdminController {
 //        teacherDao.deleteByName(userName);
 //        return "用户删除成功";
 //    }
-
+    @RequestMapping(value = "/TeacherEdit",method = RequestMethod.POST)
     public String teacherEdit(@RequestBody Teacher teacher){     //管理员编辑老师信息
         teacherDao.update(teacher);
         return "编辑成功";
     }
 
+    @RequestMapping(value = "/deleteTeacher",method = RequestMethod.POST)
     public String deleteTeacher(String teacherName){        //管理员删除老师
         teacherService.delTeacher(teacherName);
         return "删除成功";
     }
 
     @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
-    public String uploadTeacher(Teacher teacher){       //管理员上传老师信息到数据库
+    public String uploadTeacher(@RequestBody Teacher teacher){       //管理员上传老师信息到数据库
+        System.out.println(teacher.getTeacherName());
         teacherService.addTeacher(teacher);
         return "上传成功";
     }
+
 }

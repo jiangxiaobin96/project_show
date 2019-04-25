@@ -21,12 +21,12 @@ public class FileDaoImpl implements FileDao {
     public int add(File file) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into file(fileName,projectId) values(?,?)",file.getName(),file.getProjectId());
+        return jdbcTemplate.update("insert into file(name,projectId) values(?,?)",file.getName(),file.getProjectId());
     }
 
     @Override
     public int deleteFileByName(String fileName) {
-        return jdbcTemplate.update("delete from file where fileName=?", fileName);
+        return jdbcTemplate.update("delete from file where name=?", fileName);
     }
 
     @Override

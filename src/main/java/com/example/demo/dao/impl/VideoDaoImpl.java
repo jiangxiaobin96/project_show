@@ -22,12 +22,12 @@ public class VideoDaoImpl implements VideoDao {
     public int add(Video video) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into video(VideoName,projectId) values(?,?)",video.getName(),video.getProjectId());
+        return jdbcTemplate.update("insert into video(name,projectId) values(?,?)",video.getName(),video.getProjectId());
     }
 
     @Override
     public int deleteVideoByName(String videoName) {
-        return jdbcTemplate.update("delete from video where videoName=?", videoName);
+        return jdbcTemplate.update("delete from video where name=?", videoName);
     }
 
     @Override

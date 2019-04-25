@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +16,12 @@ import java.util.List;
 @RestController
 public class FileController {
 
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public FileController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 //    /**
 //     * 保存文件，直接以multipartFile形式
 //     * @param multipartFile
@@ -67,9 +76,22 @@ public class FileController {
         return "success";
     }
 
+    @RequestMapping("/show")
+    public ResponseEntity show(String pictureName){
+        try {
+            String path = "E:/coding-java/";
+            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + pictureName));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
     @RequestMapping("/download")
-    public String downLoad(HttpServletResponse response){
-        String filename="2.png";
+    public String downLoad(String filename,HttpServletResponse response){
+        System.out.println(filename);
+//        String filename="2.png";
         String filePath = "E:/coding-java" ;
         File file = new File(filePath + "/" + filename);
         if(file.exists()){ //判断文件父目录是否存在

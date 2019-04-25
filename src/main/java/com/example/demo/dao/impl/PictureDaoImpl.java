@@ -21,12 +21,12 @@ public class PictureDaoImpl implements PictureDao {
     public int add(Picture picture) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into picture(pictureName,projectId) values(?,?)",picture.getName(),picture.getProjectId());
+        return jdbcTemplate.update("insert into picture(name,projectId) values(?,?)",picture.getName(),picture.getProjectId());
     }
 
     @Override
     public int deletePictureByName(String pictureName) {
-        return jdbcTemplate.update("delete from project where pictureName=?", pictureName);
+        return jdbcTemplate.update("delete from picture where name=?", pictureName);
     }
 
     @Override
@@ -38,8 +38,9 @@ public class PictureDaoImpl implements PictureDao {
     public List<Picture> queryPictureByProjectId(int projectId) {
 //        int projectId = projectDao.queryProjectIdByName(projectName);
         RowMapper<Picture> rowMapper = new BeanPropertyRowMapper<>(Picture.class);
-        String sql2 = "select * from video where projectId=" + projectId;
+        String sql2 = "select * from picture where projectId=" + projectId;
         List<Picture> pictureList = jdbcTemplate.query(sql2,rowMapper);
+        System.out.println(pictureList.size());
         if(null != pictureList && pictureList.size() > 0){
             return pictureList;
         }else{

@@ -130,13 +130,14 @@ public class ProjectController {
         return list;
     }
 
-    @RequestMapping(value = "/projecPicture", method = RequestMethod.POST)
+    @RequestMapping(value = "/projectPicture", method = RequestMethod.POST)
     public List<Picture> getPictureListByName(String projectName){
         List<Picture> list = pictureService.queryPictureByProjectName(projectName);
+        System.out.println(list);
         return list;
     }
 
-    @RequestMapping(value = "/projecVideo", method = RequestMethod.POST)
+    @RequestMapping(value = "/projectVideo", method = RequestMethod.POST)
     public List<Video> getVideoListByName(String projectName){
         List<Video> list = videoService.queryVideoByProjectName(projectName);
         return list;
