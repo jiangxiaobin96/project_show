@@ -1,14 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.File;
-import com.example.demo.entity.Picture;
-import com.example.demo.entity.Video;
+import com.example.demo.entity.*;
 import org.json.JSONObject;
 import com.example.demo.dao.impl.FileDaoImpl;
 import com.example.demo.dao.impl.PictureDaoImpl;
 import com.example.demo.dao.impl.ProjectDaoImpl;
 import com.example.demo.dao.impl.VideoDaoImpl;
-import com.example.demo.entity.Project;
 import com.example.demo.service.impl.FileServiceImpl;
 import com.example.demo.service.impl.PictureServiceImpl;
 import com.example.demo.service.impl.VideoServiceImpl;
@@ -41,10 +38,10 @@ public class ProjectController {
         return projectNameList;
     }
 
-    @RequestMapping("/projectList")
-    public List<Project> getProjectList(){
+    @RequestMapping(value = "/projectList",method = RequestMethod.POST)
+    public List<Project> getProjectList(@RequestBody Pagination pagination){
         System.out.println("projectList");
-        List<Project> projectList = projectDao.queryProjectList();
+        List<Project> projectList = projectDao.queryProjectList(pagination);
         return projectList;
     }
 
@@ -206,8 +203,16 @@ public class ProjectController {
     }
 
     @RequestMapping("/addRating")
-    public void projectRatingAdd(String projectName){       //打分++
+    public int projectRatingAdd(String projectName){       //打分++
         projectDao.updateRating(projectName);
+        int rating = projectDao.queryProjectByName(projectName).getRating();
+        System.out.println("rating:"+rating);
+        return rating;
+    }
+
+    @RequestMapping("/ProjectCount")
+    public int getProjectCount(Pagination pagination){
+        return projectDao.projectCount(pagination);
     }
 
 }
