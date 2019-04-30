@@ -35,6 +35,14 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
+    public int teacherCount() {
+        String sql = "select count(*) from teacher";
+        int count = jdbcTemplate.queryForObject(sql,Integer.class);
+        System.out.println("teacherCount:"+count);
+        return count;
+    }
+
+    @Override
     public int queryTeacherIdByName(String teacherName) {
         String sql = "select * from teacher where teacherName=" + "'" + teacherName + "'";
         int teacherId = jdbcTemplate.queryForObject(sql,Integer.class);
@@ -84,11 +92,18 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> queryTeacherList() {
+    public List<Teacher> queryTeacherList(int index) {
         String sql = "select * from teacher";
         RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
         List<Teacher> teachers = jdbcTemplate.query(sql,rowMapper);
+
         if(null != teachers && teachers.size() > 0){
+            if (index > 0) {
+                int fromIndex = (index-1)*9;
+                int toIndex = index*9;
+                if(toIndex > teachers.size()) toIndex = teachers.size();
+                teachers = teachers.subList(fromIndex,toIndex);
+            }
             return teachers;
         }else{
             return null;

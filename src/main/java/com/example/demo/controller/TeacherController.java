@@ -38,9 +38,14 @@ public class TeacherController {
     }
 
     @RequestMapping("/TeacherList")
-    public List<Teacher> getTeacherList(){
-        List<Teacher> list = teacherDao.queryTeacherList();
+    public List<Teacher> getTeacherList(int index){
+        List<Teacher> list = teacherDao.queryTeacherList(index);
         return list;
+    }
+
+    @RequestMapping(value = "/TeacherCount")
+    public int getTeacherCount(){
+        return teacherDao.teacherCount();
     }
 
     @RequestMapping(value = "/searchTeacherName", method = RequestMethod.POST)

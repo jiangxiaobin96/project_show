@@ -27,7 +27,8 @@ public class LoginController {
         System.out.println("userName"+userName);
         System.out.println("password"+password);
         User user1 = userDao.queryUserResourceByName(userName);
-        if(password.equals(user1.getPassword())){
+        if(user1 == null) return null;
+        if(user1.getPassword().equals(password)){
             return user1;
         }else{
             return null;
@@ -40,16 +41,7 @@ public class LoginController {
         List<Home> list = homeDao.getHomePage();
         System.out.println(list);
         Iterator<Home> it = list.iterator();
-        if(authority == 0) {
-            while(it.hasNext()){
-                String tip = it.next().getTitle();
-                if(tip.equals("管理员") || tip.equals("老师")){
-                    it.remove();
-                }
-            }
-            System.out.println(list.size());
-            return list;
-        }
+
         if(authority == 2) {
             while(it.hasNext()){
                 String tip = it.next().getTitle();
@@ -59,8 +51,7 @@ public class LoginController {
             }
             System.out.println(list.size());
             return list;
-        }
-        if(authority == 1) {
+        }else if(authority == 1) {
             while(it.hasNext()){
                 String tip = it.next().getTitle();
                 if(tip.equals("老师")){
@@ -69,8 +60,16 @@ public class LoginController {
             }
             System.out.println(list.size());
             return list;
+        }else {
+            while(it.hasNext()){
+                String tip = it.next().getTitle();
+                if(tip.equals("管理员") || tip.equals("老师")){
+                    it.remove();
+                }
+            }
+            System.out.println(list.size());
+            return list;
         }
-        return list;
     }
 
     @RequestMapping("/layout")
