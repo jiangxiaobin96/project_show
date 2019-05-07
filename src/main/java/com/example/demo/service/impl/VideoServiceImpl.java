@@ -25,8 +25,8 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public List<Video> queryVideoByProjectName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public List<Video> queryVideoByProjectId(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         List<Video> list = videoDao.queryVideoByProjectId(projectId);
         return list;
     }

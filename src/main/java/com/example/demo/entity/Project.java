@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "project")
 public class Project implements Serializable {
     @GeneratedValue
-//    private int projectId;
+    private int projectId;
     private String projectName;
     private String type;
     private String finishDate;
@@ -126,11 +126,11 @@ public class Project implements Serializable {
         this.firstPicture = firstPicture;
     }
 
-//    public int getProjectId() {
-//        return projectId;
-//    }
-//
-//    public void setProjectId(int projectId) {
-//        this.projectId = projectId;
-//    }
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
 }

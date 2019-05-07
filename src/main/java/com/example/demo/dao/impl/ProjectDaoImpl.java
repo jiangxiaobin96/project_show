@@ -36,13 +36,13 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public int updateRating(String projectName) {
-        String sql = "select rating from project where projectName="+"'"+projectName+"'";
+    public int updateRating(int projectId) {
+        String sql = "select rating from project where projectId="+ projectId;
         System.out.println("sql:"+sql);
         int rating = jdbcTemplate.queryForObject(sql,Integer.class);
         System.out.println("rating:"+rating);
         rating = rating + 1;
-        return jdbcTemplate.update("update project set rating=? where projectName=?",rating,projectName);
+        return jdbcTemplate.update("update project set rating=? where projectId=?",rating,projectId);
     }
 
     @Override
@@ -113,6 +113,22 @@ public class ProjectDaoImpl implements ProjectDao {
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> project = jdbcTemplate.query(sql,rowMapper);
 //        System.out.println(project);
+        if(null != project && project.size() > 0){
+            //System.out.println(project.get(0));
+            return project.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public Project queryProjectById(int projectId) {
+        String sql = "select * from project where projectId=" + projectId;
+        System.out.println("sql:"+sql);
+        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
+        List<Project> project = jdbcTemplate.query(sql,rowMapper);
+        System.out.println("hhhhhhhhhh");
+        System.out.println(project.get(0).getProjectName());
         if(null != project && project.size() > 0){
             //System.out.println(project.get(0));
             return project.get(0);

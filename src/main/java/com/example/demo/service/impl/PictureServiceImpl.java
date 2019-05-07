@@ -25,8 +25,8 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public List<Picture> queryPictureByProjectName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public List<Picture> queryPictureByProjectId(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         List<Picture> list = pictureDao.queryPictureByProjectId(projectId);
         return list;
     }

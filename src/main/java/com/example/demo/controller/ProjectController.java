@@ -33,27 +33,27 @@ public class ProjectController {
     private VideoDaoImpl videoDao;
 
     @RequestMapping("/projecNametList")
-    public List<String> getProjectNameList(){      //向前端传项目列表
+    public List<String> getProjectNameList(){      //向前端传项目名列表
         List<String> projectNameList = projectDao.queryProjectNameList();
         return projectNameList;
     }
 
     @RequestMapping(value = "/projectList",method = RequestMethod.POST)
-    public List<Project> getProjectList(@RequestBody Pagination pagination){
+    public List<Project> getProjectList(@RequestBody Pagination pagination){  // 项目列表
         System.out.println("projectList");
         List<Project> projectList = projectDao.queryProjectList(pagination);
         return projectList;
     }
 
     @RequestMapping("/typeList")
-    public List<String> getTypeList(){
+    public List<String> getTypeList(){      //项目列表中的类型列表
         System.out.println("typeList");
         List<String> typeList = projectDao.queryTypeList();
         return typeList;
     }
 
     @RequestMapping("/finishDateList")
-    public List<String> getfinishDateList(){
+    public List<String> getfinishDateList(){        //项目列表中的完成时间列表
         System.out.println("finishDateList");
         List<String> finishDateList = projectDao.queryFinishDateList();
         return finishDateList;
@@ -82,7 +82,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/searchProjectByTeacherName", method = RequestMethod.POST)
-    public List<Project> getProjectListByTeacherName(String teacherName){
+    public List<Project> getProjectListByTeacherName(String teacherName){       //根据老师姓名搜索项目列表
         List<Project> projectList = projectDao.queryProjectByTeacherName(teacherName);
         return projectList;
     }
@@ -115,28 +115,30 @@ public class ProjectController {
 
     @RequestMapping(value = "/projectShow", method = RequestMethod.POST)
     @ResponseBody
-    public Project ProjectShow(String pName){   //    项目展示，将project的数据传到前端
-        Project project = projectDao.queryProjectByName(pName);
+    public Project ProjectShow(int projectId){   //    项目展示，将project的数据传到前端
+        System.out.println("getId:"+projectId);
+        Project project = projectDao.queryProjectById(projectId);
 //        System.out.println("projectName:"+project.getProjectName());
+        System.out.println("getName:"+project.getProjectName());
         return project;
     }
 
     @RequestMapping(value = "/projectFile", method = RequestMethod.POST)
-    public List<File> getFileListByName(String projectName){
-        List<File> list = fileService.queryFileByProjectName(projectName);
+    public List<File> getFileListById(int projectId){
+        List<File> list = fileService.queryFileByProjectId(projectId);
         return list;
     }
 
     @RequestMapping(value = "/projectPicture", method = RequestMethod.POST)
-    public List<Picture> getPictureListByName(String projectName){
-        List<Picture> list = pictureService.queryPictureByProjectName(projectName);
+    public List<Picture> getPictureListById(int projectId){
+        List<Picture> list = pictureService.queryPictureByProjectId(projectId);
         System.out.println(list);
         return list;
     }
 
     @RequestMapping(value = "/projectVideo", method = RequestMethod.POST)
-    public List<Video> getVideoListByName(String projectName){
-        List<Video> list = videoService.queryVideoByProjectName(projectName);
+    public List<Video> getVideoListById(int projectId){
+        List<Video> list = videoService.queryVideoByProjectId(projectId);
         return list;
     }
 
@@ -203,9 +205,9 @@ public class ProjectController {
     }
 
     @RequestMapping("/addRating")
-    public int projectRatingAdd(String projectName){       //打分++
-        projectDao.updateRating(projectName);
-        int rating = projectDao.queryProjectByName(projectName).getRating();
+    public int projectRatingAdd(int projectId){       //打分++
+        projectDao.updateRating(projectId);
+        int rating = projectDao.queryProjectById(projectId).getRating();
         System.out.println("rating:"+rating);
         return rating;
     }

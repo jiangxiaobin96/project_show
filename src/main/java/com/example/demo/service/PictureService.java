@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PictureService {
     void PictureAdd(Picture picture, String projectName);
-    List<Picture> queryPictureByProjectName(String projectName);
+    List<Picture> queryPictureByProjectId(int projectId);
 }

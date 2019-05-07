@@ -24,8 +24,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public List<File> queryFileByProjectName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public List<File> queryFileByProjectId(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectId);
         List<File> list = fileDao.queryFileByProjectId(projectId);
         return list;
     }

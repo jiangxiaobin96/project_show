@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface FileService {
     void FileAdd(File file,String projectName);
-    List<File> queryFileByProjectName(String projectName);
+    List<File> queryFileByProjectId(int projectId);
 }

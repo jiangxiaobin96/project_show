@@ -8,13 +8,14 @@ import java.util.List;
 public interface ProjectDao {
     int add(Project project);
     int update(Project project);
-    int updateRating(String projectName);
+    int updateRating(int projectId);
     int deleteByProjectName(String projectName);
     int queryProjectIdByName(String projectName);
     int projectCount(Pagination pagination);
     String queryPorjectNameById(int projectId);
     List<Project> queryProjectResourceByName(String projectName);
     Project queryProjectByName(String projectName);
+    Project queryProjectById(int projectId);
     List<String> queryProjectNameList();
     List<String> queryHomePageList();
     int typeAdd(String typeName);
