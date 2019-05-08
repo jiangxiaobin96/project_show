@@ -63,9 +63,9 @@ public class TeacherController {
 //    }
 
     @RequestMapping(value = "/teacherShow", method = RequestMethod.POST)
-    public Teacher getTeacher(String tName){       //将老师信息传给前端
-        System.out.println(tName);
-        Teacher teacher = teacherDao.queryTeacherByName(tName);
+    public Teacher getTeacher(int teacherId){       //将老师信息传给前端
+        System.out.println(teacherId);
+        Teacher teacher = teacherDao.queryTeacherById(teacherId);
         System.out.println(teacher.getWorkExperience());
         List<String> list = Arrays.asList(teacher.getWorkExperience().split(","));
         System.out.println(list);

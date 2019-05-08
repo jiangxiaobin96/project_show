@@ -11,6 +11,7 @@ public interface TeacherDao {
     int update(Teacher teacher);
     int teacherCount();
     int queryTeacherIdByName(String teacherName);
+    Teacher queryTeacherById(int teacherId);
     List<Teacher> queryTeacherResourceByName(String teacherName);
     Teacher queryTeacherByName(String teacherName);
     List<String> queryTeacherNameList();

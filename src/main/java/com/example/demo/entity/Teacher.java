@@ -4,6 +4,7 @@ import javax.persistence.Transient;
 import java.util.List;
 
 public class Teacher {
+    private int teacherId;
     private String teacherName;
     private String pictureUrl;
     private String working;
@@ -68,5 +69,13 @@ public class Teacher {
 
     public void setWorkList(List<String> workList) {
         this.workList = workList;
+    }
+
+    public int getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 }

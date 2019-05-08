@@ -53,9 +53,9 @@ public class ProjectDaoImpl implements ProjectDao {
     @Override
     public int queryProjectIdByName(String projectName) {
         String sql = "select projectId from project where projectName="+"'"+projectName+"'";
-        System.out.println("sql:"+sql);
+//        System.out.println("sql:"+sql);
         int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        System.out.println("projectId"+projectId);
+//        System.out.println("projectId"+projectId);
         return projectId;
     }
 
@@ -63,8 +63,9 @@ public class ProjectDaoImpl implements ProjectDao {
     public int projectCount(Pagination pagination) {
         String typeName = pagination.getTypeName();
         String finishDate = pagination.getFinishDate();
-
-        String sql = "select * from project ";
+//        System.out.println("typeName:"+typeName);
+//        System.out.println("date:"+finishDate);
+        String sql = "select count(*) from project ";
         if(typeName != null){
             sql = sql + "where type=" + "'" + typeName + "'";
         }
@@ -76,10 +77,20 @@ public class ProjectDaoImpl implements ProjectDao {
         }
 
         System.out.println("sql:" + sql);
-        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-        List<Project> projects = jdbcTemplate.query(sql,rowMapper);
-        int count = projects.size();
+//        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
+//        List<Project> projects = jdbcTemplate.query(sql,rowMapper);
+//        int count = projects.size();
+        int count = jdbcTemplate.queryForObject(sql,Integer.class);
+//        System.out.println("jhdfajslkjflkaj");
         System.out.println("count:"+count);
+        return count;
+    }
+
+    @Override
+    public int projectCountByName(String projectName) {
+        String sql = "select count(*) from project where projectName=" + "'" + projectName + "'";
+        int count = jdbcTemplate.queryForObject(sql,Integer.class);
+        System.out.println("projectCountByName:"+count);
         return count;
     }
 
@@ -92,14 +103,21 @@ public class ProjectDaoImpl implements ProjectDao {
 
 
     @Override
-    public List<Project> queryProjectResourceByName(String projectName) {
+    public List<Project> queryProjectResourceByName(String projectName,int index) {
         String sql = "select * from project where projectName=" + "'" + projectName + "'";
 //        System.out.println("sql:"+sql);
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> project = jdbcTemplate.query(sql,rowMapper);
 //        System.out.println(project);
+        int count = project.size();
         if(null != project && project.size() > 0){
             //System.out.println(project.get(0));
+            if(index > 0){
+                int fromIndex = (index-1)*9;
+                int toIndex = index*9;
+                if(toIndex > count) toIndex = count;
+                project = project.subList(fromIndex,toIndex);
+            }
             return project;
         }else{
             return null;
@@ -128,7 +146,7 @@ public class ProjectDaoImpl implements ProjectDao {
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> project = jdbcTemplate.query(sql,rowMapper);
         System.out.println("hhhhhhhhhh");
-        System.out.println(project.get(0).getProjectName());
+        System.out.println(project.get(0).getStudentName());
         if(null != project && project.size() > 0){
             //System.out.println(project.get(0));
             return project.get(0);
@@ -173,7 +191,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
     @Override
     public List<String> queryFinishDateList() {
-        String sql = "select finishDateName from finishDate";
+        String sql = "select finishDateName from finishDate ORDER BY dateId DESC";
         List<String> list = jdbcTemplate.queryForList(sql,String.class);
         return list;
     }
@@ -197,7 +215,7 @@ public class ProjectDaoImpl implements ProjectDao {
             sql = sql + "where finishDate=" + "'" + finishDate + "'";
         }
 
-        System.out.println("sql:" + sql);
+//        System.out.println("sql:" + sql);
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> projects = jdbcTemplate.query(sql,rowMapper);
         int count = projects.size();
@@ -249,8 +267,8 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public List<Project> queryProjectByTeacherName(String teacherName) {
-        String sql = "select * from project where teacherName=" + "'" + teacherName + "'";
+    public List<Project> queryProjectByTeacherId(int teacherId) {
+        String sql = "select * from project,teacher where project.teacherName = teacher.teacherName and teacherId=" +  teacherId;
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> projects = jdbcTemplate.query(sql,rowMapper);
         if(null != projects && projects.size() > 0){

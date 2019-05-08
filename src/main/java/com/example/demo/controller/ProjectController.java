@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProjectController {
@@ -40,29 +41,32 @@ public class ProjectController {
 
     @RequestMapping(value = "/projectList",method = RequestMethod.POST)
     public List<Project> getProjectList(@RequestBody Pagination pagination){  // 项目列表
-        System.out.println("projectList");
+//        System.out.println("projectList");
         List<Project> projectList = projectDao.queryProjectList(pagination);
         return projectList;
     }
 
     @RequestMapping("/typeList")
     public List<String> getTypeList(){      //项目列表中的类型列表
-        System.out.println("typeList");
+//        System.out.println("typeList");
         List<String> typeList = projectDao.queryTypeList();
         return typeList;
     }
 
     @RequestMapping("/finishDateList")
     public List<String> getfinishDateList(){        //项目列表中的完成时间列表
-        System.out.println("finishDateList");
+//        System.out.println("finishDateList");
         List<String> finishDateList = projectDao.queryFinishDateList();
         return finishDateList;
     }
 
     @RequestMapping(value = "/searchName", method = RequestMethod.POST)
-    public List<Project> getProjectByName(String projectName){         //根据项目名称搜索
+    public List<Project> getProjectByName(@RequestBody Map<String,Object> map){         //根据项目名称搜索
+        String projectName = (String) map.get("projectName");
+        int index = (int) map.get("index");
         System.out.println("projectName:"+projectName);
-        return projectDao.queryProjectResourceByName(projectName);
+        System.out.println("index:"+ index);
+        return projectDao.queryProjectResourceByName(projectName,index);
     }
 
     @RequestMapping(value = "/searchType", method = RequestMethod.POST)
@@ -81,9 +85,9 @@ public class ProjectController {
         return projectList;
     }
 
-    @RequestMapping(value = "/searchProjectByTeacherName", method = RequestMethod.POST)
-    public List<Project> getProjectListByTeacherName(String teacherName){       //根据老师姓名搜索项目列表
-        List<Project> projectList = projectDao.queryProjectByTeacherName(teacherName);
+    @RequestMapping(value = "/searchProjectByTeacherId", method = RequestMethod.POST)
+    public List<Project> getProjectListByTeacherName(int teacherId){       //根据老师姓名搜索项目列表
+        List<Project> projectList = projectDao.queryProjectByTeacherId(teacherId);
         return projectList;
     }
 
@@ -213,8 +217,13 @@ public class ProjectController {
     }
 
     @RequestMapping("/ProjectCount")
-    public int getProjectCount(Pagination pagination){
+    public int getProjectCount(@RequestBody Pagination pagination){
         return projectDao.projectCount(pagination);
+    }
+
+    @RequestMapping(value = "/ProjectCountByName",method = RequestMethod.POST)
+    public int getProjectCountByName(String projectName){
+        return projectDao.projectCountByName(projectName);
     }
 
 }

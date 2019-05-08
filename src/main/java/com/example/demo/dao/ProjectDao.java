@@ -12,8 +12,9 @@ public interface ProjectDao {
     int deleteByProjectName(String projectName);
     int queryProjectIdByName(String projectName);
     int projectCount(Pagination pagination);
+    int projectCountByName(String projectName);
     String queryPorjectNameById(int projectId);
-    List<Project> queryProjectResourceByName(String projectName);
+    List<Project> queryProjectResourceByName(String projectName,int index);
     Project queryProjectByName(String projectName);
     Project queryProjectById(int projectId);
     List<String> queryProjectNameList();
@@ -26,5 +27,5 @@ public interface ProjectDao {
     List<Project> queryProjectListByType(String typeName);
     List<Project> queryProjectListByTime(String finishDate);
     List<Project> queryProjectListByRating();
-    List<Project> queryProjectByTeacherName(String teacherName);
+    List<Project> queryProjectByTeacherId(int teacherId);
 }
