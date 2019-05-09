@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @RestController
+@RequestMapping("/project")
 public class FileController {
 
     private final ResourceLoader resourceLoader;

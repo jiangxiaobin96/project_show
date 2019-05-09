@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/project")
 public class TeacherController {
 
     @Autowired
@@ -83,6 +84,12 @@ public class TeacherController {
 //        return "删除成功";
 //    }
 
+    @RequestMapping(value = "/uidName",method = RequestMethod.POST)
+    public String getUidName(String pictureName){
+        String uidName = teacherDao.getUidName(pictureName);
+        return uidName;
+    }
+
     @RequestMapping(value = "/uploadProject", method = RequestMethod.POST)
     public String uploadProject(@RequestBody Project project){   //老师project内容上传至数据库
         System.out.println("success");
@@ -113,4 +120,6 @@ public class TeacherController {
 //        System.out.println(files);
         return "上传成功";
     }
+
+
 }

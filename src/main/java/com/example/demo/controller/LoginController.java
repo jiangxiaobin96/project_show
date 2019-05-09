@@ -13,6 +13,7 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/project")
 public class LoginController {
 
     @Autowired

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/project")
 public class AdminController {
 
     @Autowired
@@ -111,10 +112,10 @@ public class AdminController {
 //    }
     @RequestMapping(value = "/TeacherEdit",method = RequestMethod.POST)
     public String teacherEdit(@RequestBody Teacher teacher){     //管理员编辑老师信息
-        String pictureUrl = teacher.getPicture().getName();
-        String uidName = teacher.getPicture().getSize() + "_" + pictureUrl;
-        teacher.setPictureUrl(pictureUrl);
-        teacher.setUidName(uidName);
+//        String pictureUrl = teacher.getPicture().getName();
+//        String uidName = teacher.getPicture().getSize() + "_" + pictureUrl;
+//        teacher.setPictureUrl(teacher.get);
+//        teacher.setUidName(uidName);
         teacherDao.update(teacher);
         return "编辑成功";
     }

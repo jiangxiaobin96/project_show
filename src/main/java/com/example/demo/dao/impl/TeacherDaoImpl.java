@@ -52,9 +52,15 @@ public class TeacherDaoImpl implements TeacherDao {
     @Override
     public String getUidName(String pictureName) {
         String sql = "select uidName from teacher where pictureUrl=" + "'" + pictureName + "'";
-//        System.out.println(sql);
+        System.out.println(sql);
 //        String uidName = jdbcTemplate.queryForObject(sql,String.class);
-        String uidName = jdbcTemplate.queryForObject(sql,String.class);
+        String uidName;
+        try{
+            uidName = jdbcTemplate.queryForObject(sql,String.class);
+        }catch (Exception e){
+            uidName = "fail";
+        }
+
 //        System.out.println("uidName:"+uidName);
         return uidName;
     }
