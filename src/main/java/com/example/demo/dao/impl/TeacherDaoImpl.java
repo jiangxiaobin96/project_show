@@ -19,8 +19,8 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public int add(Teacher teacher) {
-        String sql = "insert into teacher(teacherName,pictureUrl,working,address,introduction,workExperience) values(?,?,?,?,?,?)";
-        return jdbcTemplate.update(sql,teacher.getTeacherName(),teacher.getPictureUrl(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience());
+        String sql = "insert into teacher(teacherName,pictureUrl,uidName,working,address,introduction,workExperience) values(?,?,?,?,?,?,?)";
+        return jdbcTemplate.update(sql,teacher.getTeacherName(),teacher.getPictureUrl(),teacher.getUidName(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience());
     }
 
     @Override
@@ -30,8 +30,8 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public int update(Teacher teacher) {
-        String sql = "update teacher set pictureUrl=?,working=?,address=?,introduction=?,workExperience=? where teacherName=?";
-        return jdbcTemplate.update(sql,teacher.getPictureUrl(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience(),teacher.getTeacherName());
+        String sql = "update teacher set pictureUrl=?,uidName=?,working=?,address=?,introduction=?,workExperience=? where teacherName=?";
+        return jdbcTemplate.update(sql,teacher.getPictureUrl(),teacher.getUidName(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience(),teacher.getTeacherName());
     }
 
     @Override
@@ -50,6 +50,16 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
+    public String getUidName(String pictureName) {
+        String sql = "select uidName from teacher where pictureUrl=" + "'" + pictureName + "'";
+//        System.out.println(sql);
+//        String uidName = jdbcTemplate.queryForObject(sql,String.class);
+        String uidName = jdbcTemplate.queryForObject(sql,String.class);
+//        System.out.println("uidName:"+uidName);
+        return uidName;
+    }
+
+    @Override
     public Teacher queryTeacherById(int teacherId) {
         String sql = "select * from teacher where teacherId=" + teacherId;
         RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
@@ -63,7 +73,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public List<Teacher> queryTeacherResourceByName(String teacherName) {
-        String sql = "select * from teacher where teacherName=" + "'" + teacherName + "'";
+        String sql = "select * from teacher where teacherName like" + "'%" + teacherName + "%'";
 //        System.out.println("sql:"+sql);
         RowMapper<Teacher> rowMapper = new BeanPropertyRowMapper<>(Teacher.class);
         List<Teacher> teacher = jdbcTemplate.query(sql,rowMapper);

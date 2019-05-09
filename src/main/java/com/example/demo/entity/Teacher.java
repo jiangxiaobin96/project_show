@@ -6,7 +6,9 @@ import java.util.List;
 public class Teacher {
     private int teacherId;
     private String teacherName;
+    private Picture picture;
     private String pictureUrl;
+    private String uidName;
     private String working;
     private String address;
     private String introduction;
@@ -77,5 +79,21 @@ public class Teacher {
 
     public void setTeacherId(int teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public String getUidName() {
+        return uidName;
+    }
+
+    public void setUidName(String uidName) {
+        this.uidName = uidName;
+    }
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 }

@@ -9,4 +9,5 @@ public interface FileDao {
     int deleteFileByName(String fileName);
     int deleteFileByProjectId(int projectId);
     List<File> queryFileByProjectId(int projectId);
+    String getUidName(String name);
 }

@@ -2,17 +2,9 @@ package com.example.demo.entity;
 
 public class File {
     private String name;
-//    private String fileUrl ;
+    private int size;
     private int projectId;
 
-
-//    public String getFileUrl() {
-//        return fileUrl;
-//    }
-//
-//    public void setFileUrl(String fileUrl) {
-//        this.fileUrl = fileUrl;
-//    }
 
     public int getProjectId() {
         return projectId;
@@ -29,4 +21,21 @@ public class File {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+
+//    public String getUid() {
+//        return uid;
+//    }
+//
+//    public void setUid(String uid) {
+//        this.uid = uid;
+//    }
 }

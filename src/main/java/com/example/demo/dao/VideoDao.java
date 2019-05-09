@@ -9,4 +9,5 @@ public interface VideoDao {
     int deleteVideoByName(String videoName);
     int deleteVideoByProjectId(int projectId);
     List<Video> queryVideoByProjectId(int projectId);
+    String getUidName(String name);
 }

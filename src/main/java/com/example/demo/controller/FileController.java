@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dao.impl.FileDaoImpl;
+import com.example.demo.dao.impl.PictureDaoImpl;
+import com.example.demo.dao.impl.TeacherDaoImpl;
+import com.example.demo.dao.impl.VideoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -17,6 +21,14 @@ import java.util.List;
 public class FileController {
 
     private final ResourceLoader resourceLoader;
+    @Autowired
+    private FileDaoImpl fileDao;
+    @Autowired
+    private PictureDaoImpl pictureDao;
+    @Autowired
+    private VideoDaoImpl videoDao;
+    @Autowired
+    private TeacherDaoImpl teacherDao;
 
     @Autowired
     public FileController(ResourceLoader resourceLoader) {
@@ -49,14 +61,18 @@ public class FileController {
 
     @RequestMapping(value = "/file_upload", method = RequestMethod.POST)
     public String fileUpload(@RequestParam("file") List <MultipartFile> files){
+
         if(files.isEmpty()){
             return "fail";
         }
-        String path = "E:/coding-java";
+        String path = "E:/coding-java/storage";
         for(MultipartFile file : files){
             String fileName = file.getOriginalFilename();
+//            String uid = file.get
             int size = (int) file.getSize();
             System.out.println(fileName + "->" + size);
+            fileName = size + "_" + fileName;
+            System.out.println(fileName);
 
             if(file.isEmpty()){
                 return "fail";
@@ -76,23 +92,68 @@ public class FileController {
         return "success";
     }
 
-    @RequestMapping("/show")
-    public ResponseEntity show(String pictureName){
+    @RequestMapping("/showPicture")
+    public ResponseEntity showPicture(String pictureName){
         try {
-            String path = "E:/coding-java/";
+            String uidName = pictureDao.getUidName(pictureName);
+            String path = "E:/coding-java/storage/";
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + pictureName));
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @RequestMapping("/showTeacherPicture")
+    public ResponseEntity showTeacherPicture(String pictureName){
+        try {
+//            System.out.println(pictureName);
+            String uidName = teacherDao.getUidName(pictureName);
+//            System.out.println("teacherUidName:"+uidName);
+            String path = "E:/coding-java/storage/";
+            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping("/showFile")
+    public ResponseEntity showFile(String fileName){
+        try {
+            String uidName = fileDao.getUidName(fileName);
+            String path = "E:/coding-java/storage/";
+            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping("/showVideo")
+    public ResponseEntity showVideo(String videoName){
+        try {
+            String uidName = videoDao.getUidName(videoName);
+            String path = "E:/coding-java/storage/";
+            // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping("/download")
     public String downLoad(String filename,HttpServletResponse response){
         System.out.println(filename);
+        if(filename.indexOf(".jpg") != -1 || filename.indexOf(".png") != -1){
+            filename = pictureDao.getUidName(filename);
+        }else if(filename.indexOf("mp4") != -1) {
+            filename = videoDao.getUidName(filename);
+        } else{
+            filename = fileDao.getUidName(filename);
+        }
 //        String filename="2.png";
-        String filePath = "E:/coding-java" ;
+        String filePath = "E:/coding-java/storage" ;
         File file = new File(filePath + "/" + filename);
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");

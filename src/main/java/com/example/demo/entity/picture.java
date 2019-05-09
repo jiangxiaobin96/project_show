@@ -2,24 +2,9 @@ package com.example.demo.entity;
 
 public class Picture {
     private String name;
-//    private String pictureUrl;
+    private int size;
     private int projectId;
 
-//    public String getPictureName() {
-//        return pictureName;
-//    }
-//
-//    public void setPictureName(String pictureName) {
-//        this.pictureName = pictureName;
-//    }
-
-//    public String getPictureUrl() {
-//        return pictureUrl;
-//    }
-//
-//    public void setPictureUrl(String pictureUrl) {
-//        this.pictureUrl = pictureUrl;
-//    }
 
     public int getProjectId() {
         return projectId;
@@ -36,4 +21,21 @@ public class Picture {
     public void setName(String name) {
         this.name = name;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+
+//    public String getUid() {
+//        return uid;
+//    }
+//
+//    public void setUid(String uid) {
+//        this.uid = uid;
+//    }
 }

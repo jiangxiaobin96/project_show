@@ -104,7 +104,7 @@ public class ProjectDaoImpl implements ProjectDao {
 
     @Override
     public List<Project> queryProjectResourceByName(String projectName,int index) {
-        String sql = "select * from project where projectName=" + "'" + projectName + "'";
+        String sql = "select * from project where projectName like" + "'%" + projectName + "%'";
 //        System.out.println("sql:"+sql);
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         List<Project> project = jdbcTemplate.query(sql,rowMapper);

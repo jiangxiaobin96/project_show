@@ -22,7 +22,8 @@ public class VideoDaoImpl implements VideoDao {
     public int add(Video video) {
 //        String sql = "select projectId from project where projectName=" + "'" + projectName + "'";
 //        int projectId = jdbcTemplate.queryForObject(sql,Integer.class);
-        return jdbcTemplate.update("insert into video(name,projectId) values(?,?)",video.getName(),video.getProjectId());
+        String uidName = video.getSize() + "_" + video.getName();
+        return jdbcTemplate.update("insert into video(name,uid,projectId) values(?,?,?)",video.getName(),uidName,video.getProjectId());
     }
 
     @Override
@@ -46,5 +47,12 @@ public class VideoDaoImpl implements VideoDao {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public String getUidName(String name) {
+        String sql = "select uid from video where name="+"'"+name+"'";
+        String uidName = jdbcTemplate.queryForObject(sql,String.class);
+        return uidName;
     }
 }

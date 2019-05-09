@@ -111,6 +111,10 @@ public class AdminController {
 //    }
     @RequestMapping(value = "/TeacherEdit",method = RequestMethod.POST)
     public String teacherEdit(@RequestBody Teacher teacher){     //管理员编辑老师信息
+        String pictureUrl = teacher.getPicture().getName();
+        String uidName = teacher.getPicture().getSize() + "_" + pictureUrl;
+        teacher.setPictureUrl(pictureUrl);
+        teacher.setUidName(uidName);
         teacherDao.update(teacher);
         return "编辑成功";
     }
@@ -124,6 +128,10 @@ public class AdminController {
     @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
     public String uploadTeacher(@RequestBody Teacher teacher){       //管理员上传老师信息到数据库
         System.out.println(teacher.getTeacherName());
+        String pictureUrl = teacher.getPicture().getName();
+        String uidName = teacher.getPicture().getSize() + "_" + pictureUrl;
+        teacher.setPictureUrl(pictureUrl);
+        teacher.setUidName(uidName);
         teacherService.addTeacher(teacher);
         return "上传成功";
     }

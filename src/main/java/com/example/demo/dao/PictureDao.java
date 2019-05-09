@@ -9,4 +9,5 @@ public interface PictureDao {
     int deletePictureByName(String pictureName);
     int deletePictureByProjectId(int projectId);
     List<Picture> queryPictureByProjectId(int projectId);
+    String getUidName(String name);
 }
