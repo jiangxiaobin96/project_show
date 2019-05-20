@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/project")
@@ -54,10 +55,10 @@ public class AdminController {
 
 
     @RequestMapping(value = "/projectDel", method = RequestMethod.POST)
-    public String projectDel(String projectName){       //管理员删除项目
+    public String projectDel(int projectId){       //管理员删除项目
 //        projectDao.deleteByProjectName(projectName);
-        System.out.println(projectName);
-        projectService.delProjectByName(projectName);
+//        System.out.println(projectName);
+        projectService.delProjectById(projectId);
         return "删除成功";
     }
 
@@ -135,6 +136,14 @@ public class AdminController {
         teacher.setUidName(uidName);
         teacherService.addTeacher(teacher);
         return "上传成功";
+    }
+
+    @RequestMapping(value = "/passwordEdit",method = RequestMethod.POST)
+    public String passwordEdit(@RequestBody Map<String,Object> map){
+        String password = (String) map.get("password");
+        int teacherId = (int) map.get("teacherId");
+        userDao.passwordEdit(password,teacherId);
+        return "success";
     }
 
 }

@@ -9,7 +9,7 @@ public interface ProjectDao {
     int add(Project project);
     int update(Project project);
     int updateRating(int projectId);
-    int deleteByProjectName(String projectName);
+    int deleteByProjectId(int projectId);
     int queryProjectIdByName(String projectName);
     int projectCount(Pagination pagination);
     int projectCountByName(String projectName);

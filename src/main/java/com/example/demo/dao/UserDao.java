@@ -7,4 +7,6 @@ public interface UserDao {
     int update(User user);
     int deleteByName(String userName);
     User queryUserResourceByName(String userName);
+    int passwordEdit(String password,int teacherId);
+    int queryUserIdByName(String userName);
 }

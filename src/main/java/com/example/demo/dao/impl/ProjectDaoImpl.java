@@ -46,8 +46,8 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public int deleteByProjectName(String projectName) {
-        return jdbcTemplate.update("delete from project where projectName=?",projectName);
+    public int deleteByProjectId(int projectId) {
+        return jdbcTemplate.update("delete from project where projectId=?",projectId);
     }
 
     @Override

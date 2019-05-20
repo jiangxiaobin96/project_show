@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ProjectService {
 //    void uploadProject();
-    void delProjectByName(String projectName);
+    void delProjectById(int projectId);
     void typeAndfinishDateAdd(Project project);
 }

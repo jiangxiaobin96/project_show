@@ -37,7 +37,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/home_page",method = RequestMethod.POST)
-    public List<Home> getHomePage(int authority){
+    public List<Home> getHomePage(int authority){   //获得首页导航栏数据
         System.out.println(authority);
         List<Home> list = homeDao.getHomePage();
         System.out.println(list);

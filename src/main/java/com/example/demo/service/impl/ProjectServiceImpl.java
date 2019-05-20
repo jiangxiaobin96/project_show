@@ -25,12 +25,12 @@ public class ProjectServiceImpl implements ProjectService {
     private VideoDaoImpl videoDao;
 
     @Override
-    public void delProjectByName(String projectName) {
-        int projectId = projectDao.queryProjectIdByName(projectName);
+    public void delProjectById(int projectId) {
+//        int projectId = projectDao.queryProjectIdByName(projectName);
         fileDao.deleteFileByProjectId(projectId);
         pictureDao.deletePictureByProjectId(projectId);
         videoDao.deleteVideoByProjectId(projectId);
-        projectDao.deleteByProjectName(projectName);
+        projectDao.deleteByProjectId(projectId);
     }
 
     @Override

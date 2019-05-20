@@ -18,11 +18,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void addTeacher(Teacher teacher) {
-        teacherDao.add(teacher);
         User user = new User();
         user.setUserName(teacher.getTeacherName());
         user.setPassword("123456");//默认密码
         userDao.add(user);
+        int teacherId = userDao.queryUserIdByName(teacher.getTeacherName());
+        teacher.setTeacherId(teacherId);
+        teacherDao.add(teacher);
     }
 
     @Override

@@ -9,7 +9,7 @@ import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class WebAppConfig {
-    @Value("${img.location}")
+    @Value("${file.location}")
     private String location;
     @Bean
     public MultipartConfigElement multipartConfigElement(){

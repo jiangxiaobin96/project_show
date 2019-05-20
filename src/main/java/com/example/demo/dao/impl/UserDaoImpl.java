@@ -53,4 +53,16 @@ public class UserDaoImpl implements UserDao {
         }
 
     }
+
+    @Override
+    public int passwordEdit(String password, int teacherId) {
+        return jdbcTemplate.update("update user set password=? where userId=?",password,teacherId);
+    }
+
+    @Override
+    public int queryUserIdByName(String userName) {
+        String sql = "select userId from user where userName="+"'"+userName+"'";
+        int teacherId = jdbcTemplate.queryForObject(sql,Integer.class);
+        return teacherId;
+    }
 }

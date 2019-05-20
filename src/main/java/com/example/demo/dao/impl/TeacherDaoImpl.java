@@ -19,8 +19,8 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public int add(Teacher teacher) {
-        String sql = "insert into teacher(teacherName,pictureUrl,uidName,working,address,introduction,workExperience) values(?,?,?,?,?,?,?)";
-        return jdbcTemplate.update(sql,teacher.getTeacherName(),teacher.getPictureUrl(),teacher.getUidName(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience());
+        String sql = "insert into teacher(teacherId,teacherName,pictureUrl,uidName,working,address,introduction,workExperience) values(?,?,?,?,?,?,?,?)";
+        return jdbcTemplate.update(sql,teacher.getTeacherId(),teacher.getTeacherName(),teacher.getPictureUrl(),teacher.getUidName(),teacher.getWorking(),teacher.getAddress(),teacher.getIntroduction(),teacher.getWorkExperience());
     }
 
     @Override

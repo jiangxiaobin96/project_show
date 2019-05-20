@@ -7,6 +7,7 @@ import com.example.demo.dao.impl.TeacherDaoImpl;
 import com.example.demo.dao.impl.VideoDaoImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,8 @@ public class FileController {
     private VideoDaoImpl videoDao;
     @Autowired
     private TeacherDaoImpl teacherDao;
+    @Value("${file.location}")
+    private String path;
 
     @Autowired
     public FileController(ResourceLoader resourceLoader) {
@@ -66,7 +69,7 @@ public class FileController {
         if(files.isEmpty()){
             return "fail";
         }
-        String path = "E:/coding-java/storage";
+//        String path = "E:/coding-java/storage";
         for(MultipartFile file : files){
             String fileName = file.getOriginalFilename();
 //            String uid = file.get
@@ -78,7 +81,7 @@ public class FileController {
             if(file.isEmpty()){
                 return "fail";
             }else{
-                File dest = new File(path + "/" + fileName);
+                File dest = new File(path  + fileName);
                 if(!dest.getParentFile().exists()){
                     dest.getParentFile().mkdir();
                 }
@@ -97,7 +100,7 @@ public class FileController {
     public ResponseEntity showPicture(String pictureName){
         try {
             String uidName = pictureDao.getUidName(pictureName);
-            String path = "E:/coding-java/storage/";
+//            String path = "E:/coding-java/storage/";
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
             return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
         } catch (Exception e) {
@@ -111,7 +114,7 @@ public class FileController {
 //            System.out.println(pictureName);
             String uidName = teacherDao.getUidName(pictureName);
 //            System.out.println("teacherUidName:"+uidName);
-            String path = "E:/coding-java/storage/";
+//            String path = "E:/coding-java/storage/";
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
             return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
         } catch (Exception e) {
@@ -123,7 +126,7 @@ public class FileController {
     public ResponseEntity showFile(String fileName){
         try {
             String uidName = fileDao.getUidName(fileName);
-            String path = "E:/coding-java/storage/";
+//            String path = "E:/coding-java/storage/";
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
             return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
         } catch (Exception e) {
@@ -135,7 +138,7 @@ public class FileController {
     public ResponseEntity showVideo(String videoName){
         try {
             String uidName = videoDao.getUidName(videoName);
-            String path = "E:/coding-java/storage/";
+//            String path = "E:/coding-java/storage/";
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
             return ResponseEntity.ok(resourceLoader.getResource("file:" + path + uidName));
         } catch (Exception e) {
@@ -154,8 +157,8 @@ public class FileController {
             filename = fileDao.getUidName(filename);
         }
 //        String filename="2.png";
-        String filePath = "E:/coding-java/storage" ;
-        File file = new File(filePath + "/" + filename);
+//        String filePath = "E:/coding-java/storage" ;
+        File file = new File(path  + filename);
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");
             response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
