@@ -1,4 +1,4 @@
-# project_show
+# The design of platform of presenting project based on SpringBoot
 This back-end server is based on SpringBoot framework.
 
 The project contains config, controller, dao, entity and service. 
